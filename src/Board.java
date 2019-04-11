@@ -24,27 +24,41 @@ public class Board extends JPanel {
     private int numRows;
     private Timer timer;
     private int deltaTime;
+    public float fillRatio = 0.2f;
     
     public Board() {
         super();
         numCols = 40;
         numRows = 30;
-        board = new boolean[numRows][numCols]; 
-        boardTemp = new boolean[numRows][numCols];
-        for(int row = 0; row<numRows; row++) {
-            for (int col = 0; col<numCols; col++) {
-                board[row][col] = false;
-            }
-        }
-        fillRandomly(0.2f);
+        
         deltaTime = 300;
         timer = new Timer(deltaTime, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 tick();
             }
-        });
-        timer.start();                
+        });           
+        clearBoard();
+                     
+    }
+    
+    public void clearBoard() {
+        board = new boolean[numRows][numCols]; 
+        boardTemp = new boolean[numRows][numCols];
+        for(int row = 0; row<numRows; row++) {
+            for (int col = 0; col<numCols; col++) {
+                board[row][col] = false;
+                boardTemp[row][col] = false;
+            }
+        }
+        timer.stop();
+        repaint();
+    }
+    
+    
+    public void initGame() {    
+        repaint();
+        timer.start();   
     }
     
     
@@ -110,7 +124,7 @@ public class Board extends JPanel {
         return counter;
     }
     
-    private void fillRandomly(float ratio) {
+    public void fillRandomly(float ratio) {
         int numCells = (int) (numCols * numRows * ratio);
         int count = 0;
         Random random = new Random();
@@ -121,7 +135,9 @@ public class Board extends JPanel {
                 board[row][col] = true;
                 count ++;
             }
-        }        
+        }   
+        timer.stop();
+        repaint();
     }
     
     private int getSquareWidth() {
