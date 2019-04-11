@@ -24,7 +24,8 @@ public class Board extends JPanel {
     private int numRows;
     private Timer timer;
     private int deltaTime;
-    public float fillRatio = 0.2f;
+    public float fillRatio = 0.0f;
+    private JLabel totalRatioLabel;
     
     public Board() {
         super();
@@ -39,7 +40,7 @@ public class Board extends JPanel {
             }
         });           
         clearBoard();
-                     
+                  
     }
     
     public void clearBoard() {
@@ -51,6 +52,7 @@ public class Board extends JPanel {
                 boardTemp[row][col] = false;
             }
         }
+        
         timer.stop();
         repaint();
     }
@@ -73,6 +75,8 @@ public class Board extends JPanel {
                 board[i][j] = boardTemp[i][j];
             }
         } 
+        totalRatioLabel.setText("Total ratio: " + String.format("%.2f", getNumAliveCells() / 
+                (float)(numRows * numCols)));
         repaint();
     }
     
@@ -104,6 +108,18 @@ public class Board extends JPanel {
         }
                
         
+    }
+    
+    private int getNumAliveCells() {
+        int counter = 0;
+        for (int row = 0; row < numRows; row ++) {
+            for (int col = 0; col < numCols; col ++) {
+                if (board[row][col]) {
+                    counter ++;
+                }
+            }
+        }
+        return counter;
     }
     
     private int getNumNeighbours(int row, int col) {
@@ -181,6 +197,21 @@ public class Board extends JPanel {
             g.drawRect(x, y, squareWidth, squareHeight);
         }
         
+    }
+
+    void paintCell(int x, int y) {
+        int row = y / getSquareHeight();
+        int col = x / getSquareWidth();
+        if (board[row][col]) {
+            board[row][col] = false;
+        } else {
+            board[row][col] = true;
+        }
+        repaint();
+    }
+
+    void setTtotalRatioLabel(JLabel jLabelTotalRatio) {
+        totalRatioLabel = jLabelTotalRatio;
     }
 
     
