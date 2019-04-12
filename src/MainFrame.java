@@ -10,11 +10,22 @@
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    public static final int INITIAL_SPEED = 50;
+    public static final float INITIAL_RATIO = 0.2f;
+    public static final int INITIAL_SIZE = 30;
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
+        initMyComponents();
+        board.setTtotalRatioLabel(jLabelTotalRatio);
+    }
+    
+    private void initMyComponents() {
+        jSliderSize.setValue(INITIAL_SIZE);
+        jSliderRatio.setValue((int)(INITIAL_RATIO * 100));
+        jSliderSpeed.setValue(INITIAL_SPEED);
     }
 
     /**
@@ -27,6 +38,15 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jSliderRatio = new javax.swing.JSlider();
+        labelRatio = new javax.swing.JLabel();
+        jLabelTotalRatio = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jSliderSpeed = new javax.swing.JSlider();
+        jLabel5 = new javax.swing.JLabel();
+        jSliderSize = new javax.swing.JSlider();
+        jButton1 = new javax.swing.JButton();
         board = new Board();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -39,29 +59,126 @@ public class MainFrame extends javax.swing.JFrame {
         setBackground(new java.awt.Color(153, 255, 204));
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setPreferredSize(new java.awt.Dimension(150, 285));
+
+        jSliderRatio.setMaximum(99);
+        jSliderRatio.setValue(0);
+        jSliderRatio.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSliderRatioStateChanged(evt);
+            }
+        });
+
+        labelRatio.setText("0,00");
+
+        jLabelTotalRatio.setText("Total Ratio: ");
+        jLabelTotalRatio.setToolTipText("");
+
+        jLabel1.setText("Ratio:");
+
+        jLabel2.setText("Speed:");
+        jLabel2.setToolTipText("");
+
+        jSliderSpeed.setValue(0);
+        jSliderSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSliderSpeedStateChanged(evt);
+            }
+        });
+
+        jLabel5.setText("Size");
+        jLabel5.setToolTipText("");
+
+        jSliderSize.setValue(30);
+        jSliderSize.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSliderSizeStateChanged(evt);
+            }
+        });
+
+        jButton1.setText("Pause/Play");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSliderRatio, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelRatio))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelTotalRatio))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSliderSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSliderSize, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelRatio)
+                    .addComponent(jLabel1))
+                .addGap(1, 1, 1)
+                .addComponent(jSliderRatio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelTotalRatio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSliderSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSliderSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jButton1)
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.LINE_END);
+
+        board.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                boardMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout boardLayout = new javax.swing.GroupLayout(board);
         board.setLayout(boardLayout);
         boardLayout.setHorizontalGroup(
             boardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 307, Short.MAX_VALUE)
+            .addGap(0, 386, Short.MAX_VALUE)
         );
         boardLayout.setVerticalGroup(
             boardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 285, Short.MAX_VALUE)
         );
 
         getContentPane().add(board, java.awt.BorderLayout.CENTER);
@@ -114,6 +231,28 @@ public class MainFrame extends javax.swing.JFrame {
         board.fillRandomly(0.2f);
     }//GEN-LAST:event_jMenuItemFillRandomActionPerformed
 
+    private void boardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardMouseClicked
+        board.paintCell(evt.getX(), evt.getY());
+    }//GEN-LAST:event_boardMouseClicked
+
+    private void jSliderSpeedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderSpeedStateChanged
+        board.setSpeed(jSliderSpeed.getValue());
+    }//GEN-LAST:event_jSliderSpeedStateChanged
+
+    private void jSliderRatioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderRatioStateChanged
+        board.clearBoard();
+        board.fillRandomly(jSliderRatio.getValue() / 100.0f);
+        labelRatio.setText(String.format("%.2f", (jSliderRatio.getValue() / 100.0f)));
+    }//GEN-LAST:event_jSliderRatioStateChanged
+
+    private void jSliderSizeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderSizeStateChanged
+        board.setSize(jSliderSize.getValue());
+    }//GEN-LAST:event_jSliderSizeStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        board.pause();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -151,6 +290,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Board board;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabelTotalRatio;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -158,5 +302,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemFillRandom;
     private javax.swing.JMenuItem jMenuItemInitGame;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSlider jSliderRatio;
+    private javax.swing.JSlider jSliderSize;
+    private javax.swing.JSlider jSliderSpeed;
+    private javax.swing.JLabel labelRatio;
     // End of variables declaration//GEN-END:variables
 }
