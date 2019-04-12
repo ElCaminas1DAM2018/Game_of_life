@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -29,16 +30,17 @@ public class Board extends JPanel {
     
     public Board() {
         super();
-        numCols = 40;
-        numRows = 30;
         
-        deltaTime = 300;
         timer = new Timer(deltaTime, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 tick();
             }
-        });           
+        });
+        setSize(MainFrame.INITIAL_SIZE);
+        
+        deltaTime = 300;
+                   
         clearBoard();
                   
     }
@@ -78,6 +80,7 @@ public class Board extends JPanel {
         totalRatioLabel.setText("Total ratio: " + String.format("%.2f", getNumAliveCells() / 
                 (float)(numRows * numCols)));
         repaint();
+        Toolkit.getDefaultToolkit().sync(); 
     }
     
     private void applyRules(int row, int col) {
@@ -199,7 +202,7 @@ public class Board extends JPanel {
         
     }
 
-    void paintCell(int x, int y) {
+    public void paintCell(int x, int y) {
         int row = y / getSquareHeight();
         int col = x / getSquareWidth();
         if (board[row][col]) {
@@ -210,10 +213,19 @@ public class Board extends JPanel {
         repaint();
     }
 
-    void setTtotalRatioLabel(JLabel jLabelTotalRatio) {
+    public void setTtotalRatioLabel(JLabel jLabelTotalRatio) {
         totalRatioLabel = jLabelTotalRatio;
     }
 
+    public void setSpeed(int speed) {
+        timer.setDelay(2000 - speed * 20);
+    }
+    
+    public void setSize(int size) {
+        numRows = size;
+        numCols = size * 4 / 3;
+        clearBoard();
+    }
     
     
 }
