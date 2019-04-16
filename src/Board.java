@@ -31,18 +31,20 @@ public class Board extends JPanel {
     public Board() {
         super();
         
-        timer = new Timer(deltaTime, new ActionListener() {
+        timer = new Timer(2000 - MainFrame.INITIAL_SPEED * 20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 tick();
             }
         });
-        setSize(MainFrame.INITIAL_SIZE);
         
-        deltaTime = 300;
-                   
-        clearBoard();
+        setSize(MainFrame.INITIAL_SIZE);          
+        clearBoard();        
                   
+    }
+    
+    public void setCellAlive(int row, int col) {
+        board[row][col] = true;
     }
     
     public void clearBoard() {
@@ -207,10 +209,20 @@ public class Board extends JPanel {
         int col = x / getSquareWidth();
         if (board[row][col]) {
             board[row][col] = false;
+            boardTemp[row][col] = false;
         } else {
+            board[row][col] = true;
             board[row][col] = true;
         }
         repaint();
+    }
+    
+    public void pause() {
+        if (timer.isRunning()) {
+          timer.stop();   
+        } else {
+          timer.start();
+        }
     }
 
     public void setTtotalRatioLabel(JLabel jLabelTotalRatio) {

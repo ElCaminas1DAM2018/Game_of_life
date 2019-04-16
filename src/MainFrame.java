@@ -1,3 +1,6 @@
+
+import java.awt.Color;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,12 +16,15 @@ public class MainFrame extends javax.swing.JFrame {
     public static final int INITIAL_SPEED = 50;
     public static final float INITIAL_RATIO = 0.2f;
     public static final int INITIAL_SIZE = 30;
+    
+    public static PredefinedForm selectedPiece = PredefinedForm.NONE;
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
         initMyComponents();
+        initMyPieces();
         board.setTtotalRatioLabel(jLabelTotalRatio);
     }
     
@@ -26,6 +32,28 @@ public class MainFrame extends javax.swing.JFrame {
         jSliderSize.setValue(INITIAL_SIZE);
         jSliderRatio.setValue((int)(INITIAL_RATIO * 100));
         jSliderSpeed.setValue(INITIAL_SPEED);
+    }
+    
+    private void initMyPieces() {
+        piece1.setPredefinedForm(PredefinedForm.BLINKER);
+        piece1.setMain(this);
+        piece2.setPredefinedForm(PredefinedForm.GLIDER);
+        piece2.setMain(this);
+        piece3.setPredefinedForm(PredefinedForm.SPACESHIP1);
+        piece3.setMain(this);
+        piece4Point.setPredefinedForm(PredefinedForm.POINT);
+        piece4Point.setMain(this);
+    }
+    
+    public void resetPieces() {
+        piece1.setBackground(Color.lightGray);
+        piece1.setSelected(false);
+        piece2.setBackground(Color.lightGray);
+        piece2.setSelected(false);
+        piece3.setBackground(Color.lightGray);
+        piece3.setSelected(false);
+        piece4Point.setBackground(Color.lightGray);
+        piece4Point.setSelected(false);
     }
 
     /**
@@ -47,6 +75,15 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jSliderSize = new javax.swing.JSlider();
         jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        piece2 = new Piece();
+        piece1 = new Piece();
+        piece3 = new Piece();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        piece4Point = new Piece();
         board = new Board();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -159,26 +196,89 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jSliderSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jButton1)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.LINE_END);
 
-        board.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                boardMouseClicked(evt);
-            }
-        });
+        jPanel2.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setText("Blinker      ");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, -1));
+
+        jLabel4.setText("Point");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+
+        javax.swing.GroupLayout piece2Layout = new javax.swing.GroupLayout(piece2);
+        piece2.setLayout(piece2Layout);
+        piece2Layout.setHorizontalGroup(
+            piece2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+        piece2Layout.setVerticalGroup(
+            piece2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(piece2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 40, 30));
+
+        javax.swing.GroupLayout piece1Layout = new javax.swing.GroupLayout(piece1);
+        piece1.setLayout(piece1Layout);
+        piece1Layout.setHorizontalGroup(
+            piece1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+        piece1Layout.setVerticalGroup(
+            piece1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(piece1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        javax.swing.GroupLayout piece3Layout = new javax.swing.GroupLayout(piece3);
+        piece3.setLayout(piece3Layout);
+        piece3Layout.setHorizontalGroup(
+            piece3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+        piece3Layout.setVerticalGroup(
+            piece3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(piece3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 50, 40));
+
+        jLabel6.setText("Glider");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+
+        jLabel7.setText("Starship");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
+
+        javax.swing.GroupLayout piece4PointLayout = new javax.swing.GroupLayout(piece4Point);
+        piece4Point.setLayout(piece4PointLayout);
+        piece4PointLayout.setHorizontalGroup(
+            piece4PointLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+        piece4PointLayout.setVerticalGroup(
+            piece4PointLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(piece4Point, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
 
         javax.swing.GroupLayout boardLayout = new javax.swing.GroupLayout(board);
         board.setLayout(boardLayout);
         boardLayout.setHorizontalGroup(
             boardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 386, Short.MAX_VALUE)
+            .addGap(0, 429, Short.MAX_VALUE)
         );
         boardLayout.setVerticalGroup(
             boardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 285, Short.MAX_VALUE)
+            .addGap(0, 293, Short.MAX_VALUE)
         );
 
         getContentPane().add(board, java.awt.BorderLayout.CENTER);
@@ -230,10 +330,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void jMenuItemFillRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFillRandomActionPerformed
         board.fillRandomly(0.2f);
     }//GEN-LAST:event_jMenuItemFillRandomActionPerformed
-
-    private void boardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boardMouseClicked
-        board.paintCell(evt.getX(), evt.getY());
-    }//GEN-LAST:event_boardMouseClicked
 
     private void jSliderSpeedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderSpeedStateChanged
         board.setSpeed(jSliderSpeed.getValue());
@@ -293,7 +389,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelTotalRatio;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -302,9 +402,16 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemFillRandom;
     private javax.swing.JMenuItem jMenuItemInitGame;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JSlider jSliderRatio;
     private javax.swing.JSlider jSliderSize;
     private javax.swing.JSlider jSliderSpeed;
     private javax.swing.JLabel labelRatio;
+    private Piece piece1;
+    private Piece piece2;
+    private Piece piece3;
+    private Piece piece4Point;
     // End of variables declaration//GEN-END:variables
+
+    
 }
